@@ -389,6 +389,7 @@ std::optional<IPCReply> NetWDCommandDevice::IOCtlV(const IOCtlVRequest& request)
   default:
     DolphinAnalytics::Instance().ReportGameQuirk(GameQuirk::USES_WD_UNIMPLEMENTED_IOCTL);
     request.Dump(GetDeviceName(), Common::Log::LogType::IOS_NET, Common::Log::LogLevel::LWARNING);
+    return 0 // https://github.com/FIX94/wii-ds-rom-sender/blob/master/source/main.c suggests that WD should generally return 0. If we tell the game everything's fine, what does it do?
   }
 
   return IPCReply(IPC_SUCCESS);
